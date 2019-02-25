@@ -287,8 +287,41 @@ def betterEvaluationFunction(currentGameState):
       DESCRIPTION: <write something here so we know what you did>
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    curCapsules = currentGameState.getCapsules()
+    curScore = currentGameState.getScore()
+    curPos = currentGameState.getPacmanPosition()
+    curFood = currentGameState.getFood()
+    curFoodCount = currentGameState.getNumFood()
+    curGhostStates = currentGameState.getGhostStates()
+    curScaredTimes = [ghostState.scaredTimer for ghostState in curGhostStates]
 
+    ghostDist = float("inf")
+    scaredGhosts = 0
+
+    for ghost in curGhostStates:
+        if(curPos == ghost.getPosition()):
+            return float("-inf")
+        ghostDist = min(ghostDist,manhattanDistance(curPos,ghost.getPosition()))
+        if ghost.scaredTimer != 0:
+            scaredGhosts += 1
+
+    foodDistance = float("inf")
+    if(curFoodCount == 0):
+        foodDistance = 0
+    for food in curFood.asList():
+        foodDistance = min(foodDistance, manhattanDistance(curPos,food))
+
+    capsuleDistance = float("inf")
+    if(len(curCapsules) == 0):
+        capsuleDistance = 0
+    for capsule in curCapsules:
+      capsuleDistance = min(capsuleDistance,manhattanDistance(curPos,capsule))
+
+    #scaredGhosts = 1.0/(1.0 + scaredGhosts)
+
+
+    return (curScore - (curFoodCount) - (ghostDist/(len(curGhostStates)))
+     - (len(curCapsules)))
 
 # Abbreviation
 better = betterEvaluationFunction
