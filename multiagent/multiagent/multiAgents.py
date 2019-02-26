@@ -317,7 +317,11 @@ def betterEvaluationFunction(currentGameState):
     for capsule in curCapsules:
       capsuleDistance = min(capsuleDistance,manhattanDistance(curPos,capsule))
 
-
+    # Different combinations were tested but in the end keeping the pacman close
+    # to the ghosts was the most effective as when it eats the capsules it eats
+    # the ghost as well and gain more points. On the other hand manhattan distance
+    # and capsule distance made the pacman more confused at times, so they were
+    # removed. 
     return (curScore - (curFoodCount) - (ghostDist/(len(curGhostStates)))
      - (len(curCapsules)))
 
