@@ -317,8 +317,6 @@ def betterEvaluationFunction(currentGameState):
     for capsule in curCapsules:
       capsuleDistance = min(capsuleDistance,manhattanDistance(curPos,capsule))
 
-    #scaredGhosts = 1.0/(1.0 + scaredGhosts)
-
 
     return (curScore - (curFoodCount) - (ghostDist/(len(curGhostStates)))
      - (len(curCapsules)))
